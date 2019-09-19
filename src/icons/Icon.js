@@ -6,6 +6,7 @@ import {
   View,
   StyleSheet,
   Text as NativeText,
+  ActivityIndicator,
 } from 'react-native';
 
 import getIconType from '../helpers/getIconType';
@@ -26,6 +27,7 @@ const Icon = props => {
     disabled,
     disabledStyle,
     onPress,
+    loading,
     Component = onPress ? TouchableHighlight : View,
     ...attributes
   } = props;
@@ -63,6 +65,7 @@ const Icon = props => {
         {...onPress && { disabled }}
         onPress={onPress}
       >
+        {loading ? <ActivityIndicator /> : null}
         <IconComponent
           testID="iconIcon"
           style={StyleSheet.flatten([
@@ -73,6 +76,7 @@ const Icon = props => {
           name={name}
           color={reverse ? reverseColor : color}
         />
+        <
       </Component>
     </View>
   );
