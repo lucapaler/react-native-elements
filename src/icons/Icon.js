@@ -76,7 +76,6 @@ const Icon = props => {
           name={name}
           color={reverse ? reverseColor : color}
         />
-        <
       </Component>
     </View>
   );
