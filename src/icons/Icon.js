@@ -97,6 +97,7 @@ Icon.propTypes = {
   reverseColor: PropTypes.string,
   disabled: PropTypes.bool,
   disabledStyle: ViewPropTypes.style,
+  loading: PropTypes.bool,
 };
 
 Icon.defaultProps = {
@@ -108,6 +109,7 @@ Icon.defaultProps = {
   reverseColor: 'white',
   disabled: false,
   type: 'material',
+  loading: false,
 };
 
 const styles = StyleSheet.create({
