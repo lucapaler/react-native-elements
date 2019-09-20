@@ -65,17 +65,18 @@ const Icon = props => {
         {...onPress && { disabled }}
         onPress={onPress}
       >
-        {loading ? <ActivityIndicator /> : null}
-        <IconComponent
-          testID="iconIcon"
-          style={StyleSheet.flatten([
-            { backgroundColor: 'transparent' },
-            iconStyle && iconStyle,
-          ])}
-          size={size}
-          name={name}
-          color={reverse ? reverseColor : color}
-        />
+        {loading ? <ActivityIndicator /> : (
+          <IconComponent
+            testID="iconIcon"
+            style={StyleSheet.flatten([
+              { backgroundColor: 'transparent' },
+              iconStyle && iconStyle,
+            ])}
+            size={size}
+            name={name}
+            color={reverse ? reverseColor : color}
+          />
+        )}
       </Component>
     </View>
   );
