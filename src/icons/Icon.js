@@ -8,6 +8,7 @@ import {
   Text as NativeText,
   ActivityIndicator,
 } from 'react-native';
+import Color from 'color';
 
 import getIconType from '../helpers/getIconType';
 import { ViewPropTypes, withTheme } from '../config';
@@ -41,29 +42,47 @@ const Icon = props => {
     return raised ? 'white' : 'transparent';
   };
 
+  const buttonStyles = {
+    borderRadius: size + 4,
+    height: size * 2 + 4,
+    width: size * 2 + 4,
+  };
+
+  if (Platform.OS === 'android' && !attributes.background) {
+    if (Platform.Version >= 21) {
+      attributes.background = TouchableNativeFeedback.Ripple(
+        Color(color)
+          .alpha(0.2)
+          .rgb()
+          .string(),
+        true
+      );
+    }
+  }
+
   return (
-    <View style={containerStyle && containerStyle}>
+    <View
+      style={StyleSheet.flatten([
+        styles.container,
+        (reverse || raised) && styles.button,
+        (reverse || raised) && buttonStyles,
+        raised && styles.raised,
+        iconStyle && iconStyle.borderRadius
+          ? {
+              borderRadius: iconStyle.borderRadius,
+            }
+          : {},
+        containerStyle && containerStyle,
+      ])}
+    >
       <Component
         {...attributes}
-        underlayColor={reverse ? color : underlayColor || color}
-        style={StyleSheet.flatten([
-          (reverse || raised) && styles.button,
-          (reverse || raised) && {
-            borderRadius: size + 4,
-            height: size * 2 + 4,
-            width: size * 2 + 4,
-          },
-          raised && styles.raised,
-          {
-            backgroundColor: getBackgroundColor(),
-            alignItems: 'center',
-            justifyContent: 'center',
-          },
-          disabled && styles.disabled,
-          disabled && disabledStyle,
-        ])}
-        {...onPress && { disabled }}
-        onPress={onPress}
+        {...onPress && {
+          onPress,
+          disabled,
+          underlayColor: reverse ? color : underlayColor,
+          activeOpacity: 0.3,
+        }}
       >
         {loading ? <ActivityIndicator /> : (
           <IconComponent
@@ -87,7 +106,7 @@ Icon.propTypes = {
   name: PropTypes.string,
   size: PropTypes.number,
   color: PropTypes.string,
-  Component: PropTypes.func,
+  Component: PropTypes.elementType,
   underlayColor: PropTypes.string,
   reverse: PropTypes.bool,
   raised: PropTypes.bool,
@@ -101,7 +120,7 @@ Icon.propTypes = {
 };
 
 Icon.defaultProps = {
-  underlayColor: 'white',
+  underlayColor: 'transparent',
   reverse: false,
   raised: false,
   size: 24,
@@ -113,6 +132,9 @@ Icon.defaultProps = {
 };
 
 const styles = StyleSheet.create({
+  container: {
+    overflow: 'hidden',
+  },
   button: {
     margin: 7,
   },
