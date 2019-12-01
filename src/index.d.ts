@@ -844,7 +844,7 @@ export interface InputProps extends TextInputProperties {
   /**
    * Renders component in place of the React Native `TextInput` (optional)
    */
-  inputComponent?: React.ComponentType<any>;
+  InputComponent?: React.ComponentType<any>;
 
   /**
    * 	Adds styling to input component (optional)
@@ -1265,7 +1265,7 @@ export class PricingCard extends React.Component<PricingCardProps, any> {}
  */
 export * from 'react-native-ratings';
 
-export type IconNode = boolean | React.ReactElement<{}> | IconProps;
+export type IconNode = boolean | React.ReactElement<{}> | Partial<IconProps>;
 
 export interface SearchBarWrapper {
   /**
@@ -2072,4 +2072,4 @@ export const ThemeContext: React.Context<ThemeProps<{}>>;
 
 export function withTheme<P = {}, T = {}>(
   component: React.ComponentType<P & ThemeProps<T>>
-): React.ComponentClass<P>;
+): React.ComponentClass<Omit<P, keyof ThemeProps<T>>>;
