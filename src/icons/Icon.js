@@ -7,6 +7,7 @@ import {
   StyleSheet,
   Text as NativeText,
   ActivityIndicator,
+  TouchableNativeFeedback,
 } from 'react-native';
 import Color from 'color';
 
